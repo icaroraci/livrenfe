@@ -1031,7 +1031,7 @@ char *generate_evento_xml(EVENTO *e, EVP_PKEY *key, X509 *cert) {
 				return NULL;
 			rc = xmlTextWriterWriteFormatElement(writer, 
 				BAD_CAST "nProt",
-				"%s", nfe->protocolo->numero);
+				"%d", nfe->protocolo->numero);
 			if (rc < 0)
 				return NULL;
 			rc = xmlTextWriterWriteFormatElement(writer, 
