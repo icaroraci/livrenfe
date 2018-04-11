@@ -3,11 +3,15 @@ LivreNFE
 
 Copyright (C) 2016, 2017 Pablo G. Gallardo <pggllrd@gmail.com>
 
-**PROJETO EM CONSTRUÇÃO**
+Aviso
+-------
+Você conhece o projeto microsped (https://github.com/silvioprog/microsped)?
+
+**A MicroSPED e a LivreNFE se tornarão um único projeto e com um novo nome**
 
 Descrição
 ---------
-LivreNFE é um projeto opensource para a emissão de Notas Ficais Eletrónicas
+LivreNFE é um projeto opensource para a emissão de Notas Ficais Eletrônicas
 orientado para pequenas e medianas empresas. Este programa se distribui baixo
 a licença LGPLv3. Para mais informação veja o documento LICENSE.
 
@@ -29,6 +33,15 @@ Dependências
 - xmlsec 1.2.24
 - libsqlite3
 
+Exemplo de instalação em Arch linux
+---------
+
+```
+$ wget -c https://raw.githubusercontent.com/pablogallardo/livrenfe/master/PKGBUILD
+$ makepkg
+# pacman -U livrenfe-<versão>.pkg.tar.xz
+```
+
 Exemplo de instalação em Debian
 ---------
 * Instalar dependências desde repositório APT:
@@ -47,7 +60,8 @@ $ sudo make install
 ```
 
 * Instalar xmlsec versao 1.2.24 que não está disponível no repositorio APT:
-```$ git clone https://github.com/lsh123/xmlsec
+```
+$ git clone https://github.com/lsh123/xmlsec
 $ cd xmlsec
 $ autoreconf --install
 $ ./configure && make

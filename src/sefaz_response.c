@@ -72,23 +72,26 @@ static void *sefaz_thread(void *arg){
 			URLS *urls = prefs->urls;
 			if(sr->lote){
 				send_lote(sr->lote, urls->nfeautorizacao, prefs->ambiente, 
-					cuf, pKey, cert, &msg);
+					cuf, pKey, cert, msg);
 				cons_lote(sr->lote, urls->nferetautorizacao, ambiente, 
-					cuf, pKey, cert, &msg);
+					cuf, pKey, cert, msg);
 				db_save_lote(sr->lote);
 
 			} else if(sr->lote_evento){
 				send_lote_evento(sr->lote_evento, urls->nfeconsultaprotocolo, 
-					ambiente, cuf, pKey, cert, &msg);
+					ambiente, cuf, pKey, cert, msg);
 				db_save_lote_evento(sr->lote_evento);
 			} else {
-				get_status_servico(ambiente, urls->nfestatusservico, cuf, 
-					pKey, cert, &msg);
+				int res = get_status_servico(ambiente, urls->nfestatusservico, cuf, 
+					pKey, cert, msg);
+				if(res < 0){
+					msg = strcpy(msg, "Erro ao consultar status de serviço");
+				}
 			}
 			EVP_PKEY_free(pKey);
 			X509_free(cert);
 		} else {
-			msg = strdup("Error ao obter certificado e chave");
+			msg = strdup("Erro ao obter certificado e chave");
 		}
 	} else {
 		msg = strdup("Configure o certificado");
@@ -96,6 +99,13 @@ static void *sefaz_thread(void *arg){
 
 	gtk_spinner_stop(priv->spinner);
 	gtk_label_set_text(priv->resposta, msg);
+
+	gint width;
+	gint height;
+	gtk_widget_get_preferred_height(GTK_WIDGET(priv->resposta), NULL, &height);
+	gtk_widget_get_preferred_width(GTK_WIDGET(priv->resposta), NULL, &width);
+	gtk_widget_set_size_request(GTK_WIDGET(&(sr->parent)), width, height);
+	gtk_window_set_position(GTK_WINDOW(&(sr->parent)), GTK_WIN_POS_CENTER_ALWAYS);
 #if GTK_CHECK_VERSION(3,18,0)
 	gtk_overlay_reorder_overlay(priv->overlay, GTK_WIDGET(priv->resposta),
 		-1);

@@ -22,13 +22,13 @@
 #include <time.h>
 #include <gtk/gtk.h>
 
-#define	VERSION_NAME		"0.1.0"
-#define	VERSION_COUNTER		1
+#define	VERSION_NAME		"0.1.1"
+#define	VERSION_COUNTER		2
 #define VERSION_TITLE		"Tartagal"
 #define LIVRENFE_COPYRIGHT	"© 2016, 2017 Pablo G. Gallardo"
 #define	LIVRENFE_FOLDER_NAME	"/.livrenfe"
 #define	LIVRENFE_DB		"/livrenfe.db"
-#define LIVRENFE_COMMENT	"Emissor Código Aberto de Notas Fiscais Eletrónicas"
+#define LIVRENFE_COMMENT	"Emissor Código Aberto de Notas Fiscais Eletrônicas"
 #define LIVRENFE_WEBSITE	"livrenfe.org"
 #define LIVRENFE_TITLE		"LivreNFE"
 

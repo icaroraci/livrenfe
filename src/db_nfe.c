@@ -801,12 +801,12 @@ int db_save_lote_evento(LOTE_EVENTO *lote){
 			id_evento) VALUES ");
 		while(i != NULL){
 			EVENTO *e = i->evento;
+			register_evento(e);
 			char *aux = sqlite3_mprintf("(%d, %Q)", lote->id,
 				e->id);
 			if(i != lote->eventos)
 				strcat(sql, ", ");
 			strcat(sql, aux);
-			register_evento(e);
 			i = i->next;
 		}
 		db_exec(sql, &err);
@@ -821,18 +821,19 @@ int register_evento(EVENTO *e){
 	sql = malloc(400);
 	err = NULL;
 	int last_id; 
-	sql = sqlite3_mprintf("REPLACE INTO evento (id_evento, id_nfe, type,\
+	sql = sqlite3_mprintf("REPLACE INTO eventos (id_evento, id_nfe, type,\
 		xml, xml_response, xmot)\
-		VALUES ($Q, %d, %d, %Q, %Q, %Q);",
-		e->id == 0? NULL : e->id, e->nfe->idnfe->id_nfe,
-		e->nfe->idnfe->id_nfe, e->type, e->xml, e->xml_response,
-		e->xmot);
+		VALUES (%Q, %d, %d, %Q, %Q, %Q);",
+		e->id == 0? NULL : e->id, e->nfe->idnfe->id_nfe, e->type, 
+		e->xml, e->xml_response, e->xmot);
 	db_exec(sql, &err);
 	last_id = db_last_insert_id();
+	e->id = itoa(last_id);
 	if(err){
 		fprintf(stderr, "livrenfe: Error: %s", err);
 		return -ESQL;
 	}
+	register_nfe(e->nfe);
 	switch(e->type){
 		case CANCELAMENTO_TYPE:{
 			EVENTO_CANCELAMENTO *ec = (EVENTO_CANCELAMENTO*) e;
