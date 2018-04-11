@@ -1,4 +1,4 @@
-## Código de conduta
+# Código de conduta
 
 ### Nosso compromisso
 
